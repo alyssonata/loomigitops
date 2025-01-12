@@ -1,0 +1,41 @@
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: estudos-62786
+  GKE_CLUSTER: cluster-1-estudos-62786
+  GKE_ZONE: europe-west2-a
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@v2
+      with:
+        service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+        project_id: ${{ env.PROJECT_ID }}
+        install_components: kubectl
+
+    # Get the GKE credentials so we can deploy to the cluster
+    - uses: google-github-actions/get-gke-credentials@v2
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_ZONE }}
+        credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    # Set up kubectl and Deploy
+    - name: Set up kubectl and Deploy
+      run: |-
+        gcloud secrets versions access latest --secret=kubernetes_secret_tomcat --out-file=./argocd-applications/tomcat_secret.yaml --project=${{ env.PROJECT_ID }}
+        kubectl apply -f argocd-applications

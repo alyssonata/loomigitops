@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tomcat-app
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: tomcat:8.0-alpine
+    argocd-image-updater.argoproj.io/myalias.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/force-update: "true"
+
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: tomcat
+    repoURL: https://github.com/alyssonata/loomigitops.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

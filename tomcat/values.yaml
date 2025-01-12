@@ -1,0 +1,18 @@
+app:
+  name: tomcat
+  language: java
+  port: 8080
+  namespace: default
+  replicaCount: 1
+  replicaMaxSurge: 1
+  replicaMaxUnavailable: 1
+  resourcesRequestsMemory: "64Mi"
+  resourcesRequestsCpu: "50m"
+  resourcesLimitsMemory: "128Mi"
+  resourcesLimitsCpu: "100m"
+  lifecyclePostStart: ["/bin/sh", "-c", "echo"]
+  healthCheckPath: "/manager"
+
+image:
+  name: tomcat
+  tag: 8.0-alpine

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.app.name }}-app"
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.app.replicaMaxSurge }}
+      maxUnavailable: {{ .Values.app.replicaMaxUnavailable }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.app.name }}-app"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.app.name }}-app"
+    spec:
+      containers:
+        - name: "{{ .Values.app.language }}-app"
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.app.port }}
+#          lifecycle:
+#            postStart:
+#              exec:
+#                command: {{ .Values.app.lifecyclePostStart }}
+          resources:
+            requests:
+              memory: {{ .Values.app.resourcesRequestsMemory }}
+              cpu: {{ .Values.app.resourcesRequestsCpu }}
+            limits:
+              memory: {{ .Values.app.resourcesLimitsMemory }}
+              cpu: {{ .Values.app.resourcesLimitsCpu }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.app.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          volumeMounts:
+            - name: "secret-{{ .Values.app.name }}"
+              mountPath: /usr/local/tomcat/.env
+              subPath: .env
+      volumes:
+        - name: "secret-{{ .Values.app.name }}"
+          secret:
+            secretName: "secret-{{ .Values.app.name }}"
