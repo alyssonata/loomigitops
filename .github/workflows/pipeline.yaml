@@ -29,7 +29,6 @@ jobs:
 
     - uses: 'google-github-actions/auth@v2'
       with:
-        project_id: ${{ env.PROJECT_ID }}
         credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
     # Get the GKE credentials so we can deploy to the cluster
