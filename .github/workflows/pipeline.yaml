@@ -10,12 +10,12 @@ env:
   GKE_CLUSTER: cluster-1-estudos-62786
   GKE_ZONE: europe-west2-a
 
-permissions:
-  contents: 'read'
-  id-token: 'write'
-
 jobs:
   setup-build-publish-deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     name: Setup and Deploy
     runs-on: ubuntu-latest
     environment: production
