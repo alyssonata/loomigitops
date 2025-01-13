@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: ingress-gke
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-options: Validate=false
 spec:
   destination:
     namespace: default

@@ -7,7 +7,6 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: tomcat:8.0-alpine
     argocd-image-updater.argoproj.io/myalias.update-strategy: newest-build
     argocd-image-updater.argoproj.io/force-update: "true"
-    argocd.argoproj.io/sync-options: Validate=false
 
   finalizers:
     - resources-finalizer.argocd.argoproj.io
