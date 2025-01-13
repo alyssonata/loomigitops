@@ -10,6 +10,10 @@ env:
   GKE_CLUSTER: cluster-1-estudos-62786
   GKE_ZONE: europe-west2-a
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
 jobs:
   setup-build-publish-deploy:
     name: Setup and Deploy
@@ -27,10 +31,9 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         install_components: kubectl
 
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v2'
+    - uses: google-github-actions/auth@v2
       with:
-        credentials_json: '${{ secrets.gcp_credentials }}'
+        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
     # Get the GKE credentials so we can deploy to the cluster
     - uses: google-github-actions/get-gke-credentials@v2
