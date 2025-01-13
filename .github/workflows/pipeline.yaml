@@ -27,9 +27,10 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         install_components: kubectl
 
-    - uses: 'google-github-actions/auth@v2'
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
       with:
-        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+        credentials_json: '${{ secrets.gcp_credentials }}'
 
     # Get the GKE credentials so we can deploy to the cluster
     - uses: google-github-actions/get-gke-credentials@v2
