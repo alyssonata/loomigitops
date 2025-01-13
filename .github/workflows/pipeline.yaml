@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: estudos-62786
   GKE_CLUSTER: cluster-1-estudos-62786
-  GKE_ZONE: europe-west2-a
+  GKE_ZONE: europe-west2
 
 jobs:
   setup-build-publish-deploy:
@@ -37,7 +37,7 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
-        credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+#        credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
 
     # Set up kubectl and Deploy
     - name: Set up kubectl and Deploy
