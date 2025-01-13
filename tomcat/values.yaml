@@ -6,10 +6,10 @@ app:
   replicaCount: 1
   replicaMaxSurge: 1
   replicaMaxUnavailable: 1
-  resourcesRequestsMemory: "64Mi"
-  resourcesRequestsCpu: "50m"
-  resourcesLimitsMemory: "128Mi"
-  resourcesLimitsCpu: "100m"
+  resourcesRequestsMemory: "256Mi"
+  resourcesRequestsCpu: "100m"
+  resourcesLimitsMemory: "512Mi"
+  resourcesLimitsCpu: "200m"
   lifecyclePostStart: ["/bin/sh", "-c", "echo"]
   healthCheckPath: "/tomcat.png"
 
