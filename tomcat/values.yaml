@@ -11,7 +11,7 @@ app:
   resourcesLimitsMemory: "128Mi"
   resourcesLimitsCpu: "100m"
   lifecyclePostStart: ["/bin/sh", "-c", "echo"]
-  healthCheckPath: "/manager"
+  healthCheckPath: "/tomcat.png"
 
 image:
   name: tomcat
