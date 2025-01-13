@@ -43,5 +43,5 @@ jobs:
     - name: Set up kubectl and Deploy
       run: |-
         gcloud secrets versions access latest --secret=kubernetes_secret_tomcat --out-file=./argocd-applications/tomcat_secret.yaml --project=${{ env.PROJECT_ID }}
-        ls
+        ls ./argocd-applications
         kubectl apply -f argocd-applications
